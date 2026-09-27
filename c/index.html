@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Alarmas compartidas · Take Your Pills</title>
+<link rel="stylesheet" href="../_style.css">
+<style>
+  .hero { text-align: center; padding-top: 24px; }
+  .hero h1 { margin-top: 12px; }
+  .big {
+    display: block; width: 100%; box-sizing: border-box; text-align: center;
+    font: inherit; font-size: 1.25rem; font-weight: 700; color: #fff;
+    background: linear-gradient(#2a9a8c, #0e7c70); border: 0; border-radius: 999px;
+    padding: 18px 24px; margin: 28px 0 12px; text-decoration: none;
+    box-shadow: 0 10px 24px rgba(14,124,112,.3);
+  }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 0; }
+  .steps li { counter-increment: s; display: flex; gap: 14px; align-items: flex-start; margin: 14px 0; }
+  .steps li::before {
+    content: counter(s); flex: none; width: 34px; height: 34px; border-radius: 50%;
+    display: grid; place-items: center; font-weight: 700; color: #0e7c70; background: #e1f1ee;
+  }
+  .stores { display: grid; gap: 10px; margin-top: 14px; }
+  .stores a { display: block; text-align: center; font-weight: 700; padding: 14px; border-radius: 16px; border: 1px solid #d1d1d6; text-decoration: none; }
+  .error { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="hero">
+    <div class="app">Take Your Pills</div>
+    <h1 id="title">Te compartieron unas alarmas</h1>
+    <p class="muted" id="lead">Toca el botón para añadirlas a Take Your Pills.</p>
+  </div>
+
+  <a class="big" id="open" href="#">Abrir en Take Your Pills</a>
+
+  <div class="box">
+    <strong>¿Aún no tienes la app?</strong>
+    <ol class="steps">
+      <li>Descárgala gratis.</li>
+      <li>Ábrela una vez y vuelve a esta página.</li>
+      <li>Toca <b>Abrir en Take Your Pills</b> y luego <b>Añadir alarmas</b>.</li>
+    </ol>
+    <div class="stores">
+      <a id="ios" href="https://apps.apple.com/search?term=Take%20Your%20Pills">Descargar en App Store (iPhone)</a>
+      <a href="https://play.google.com/store/apps/details?id=com.takeyourpills.takeyourpills">Descargar en Google Play (Android)</a>
+    </div>
+  </div>
+
+  <p class="muted">Por tu privacidad, los medicamentos viajan dentro del propio enlace: no se guardan en ningún servidor ni los ve nadie más.</p>
+</main>
+<script>
+  // Everything after "#" stays on this phone; browsers never send it anywhere.
+  var code = location.hash.replace(/^#/, "");
+  var open = document.getElementById("open");
+  if (/^[A-Za-z0-9_-]{16,}$/.test(code)) {
+    open.href = "takeyourpills://c#" + code;
+  } else {
+    open.style.display = "none";
+    document.getElementById("title").textContent = "Este enlace está incompleto";
+    document.getElementById("lead").textContent =
+      "Pide a tu familiar que te lo envíe de nuevo desde Take Your Pills.";
+  }
+  if (/iPhone|iPad/.test(navigator.userAgent)) {
+    document.getElementById("ios").href =
+      "itms-apps://search.itunes.apple.com/WebObjects/MZSearch.woa/wa/search?media=software&term=Take%20Your%20Pills";
+  }
+</script>
+</body>
+</html>
